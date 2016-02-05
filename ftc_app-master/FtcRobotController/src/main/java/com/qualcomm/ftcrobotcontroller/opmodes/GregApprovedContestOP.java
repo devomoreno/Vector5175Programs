@@ -32,6 +32,7 @@ public class GregApprovedContestOP extends OpMode {
     double scoopDelta=0.005;
     double leftscoopPosition;
     double rightscoopPosition;
+    double scoopHalf = .5;
 
 
     public GregApprovedContestOP(){}
@@ -85,19 +86,11 @@ public class GregApprovedContestOP extends OpMode {
 
 
 
-        //RB moves the Zombie Arm up, LB moves scoop up
 
 
 
 
-
-        if (gamepad2.left_bumper){
-            leftscoopPosition += scoopDelta;
-            rightscoopPosition += scoopDelta;
-
-        }
-
-        //RT moves Zombie arm Down, LT moves scoop down
+        //RT moves Zombie arm Down,  RB moves zombie arm back up
 
 
 
@@ -105,12 +98,7 @@ public class GregApprovedContestOP extends OpMode {
 
 
 
-        if(gamepad2.left_trigger != 0){
-            leftscoopPosition -= scoopDelta;
-            rightscoopPosition -= scoopDelta;
 
-
-        }
         if(gamepad2.right_bumper){
             BaseExtend.setPower(-.5);
             SecondExtend.setPower(-.5);
@@ -145,7 +133,11 @@ public class GregApprovedContestOP extends OpMode {
 
 
 
-        //This does the scoop lift
+        //This is the code for the scoop module
+        if (gamepad1.a){
+            leftscoopPosition = scoopHalf;
+            rightscoopPosition = scoopHalf ;
+        }
 
 
         if(gamepad2.right_stick_y>0){
@@ -160,9 +152,20 @@ public class GregApprovedContestOP extends OpMode {
         if (gamepad2.right_stick_y == 0){
             motorRaise.setPower(0);
         }
+        if(gamepad2.left_trigger != 0){
+            leftscoopPosition -= scoopDelta;
+            rightscoopPosition -= scoopDelta;
 
 
-        //This is meant to set the angle for the Zombie Arm
+        }
+        if (gamepad2.left_bumper){
+            leftscoopPosition += scoopDelta;
+            rightscoopPosition += scoopDelta;
+
+        }
+
+
+
 
 
 
@@ -178,7 +181,6 @@ public class GregApprovedContestOP extends OpMode {
         float left = gamepad1.left_stick_y;
         float right = gamepad1.right_stick_y;
         float rootbeer = gamepad2.left_stick_y;
-
 
 
 
@@ -201,7 +203,7 @@ public class GregApprovedContestOP extends OpMode {
 
         Treadleft.setPower(left);
         Treadright.setPower(right);
-        LinearActuator.setPower(rootbeer*(3/4));
+        LinearActuator.setPower(rootbeer*(.75f));
 
 
 
@@ -214,6 +216,8 @@ public class GregApprovedContestOP extends OpMode {
         // write position values to the wrist and claw servo
         leftscoop.setPosition(leftscoopPosition);
         rightscoop.setPosition(rightscoopPosition);
+
+        telemetry.addData("****Your", "princess is in another castle****");
 
         //set all the driver and gamepad options. this is where the program goes.
     }

@@ -1,19 +1,13 @@
-//The purpose of this program is simply to show the number of rotations that the drive motor uses to accomplish a task.
-
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
 
 //import all hardware going to be used
-public class RotationRecorder extends OpMode {
+public class StraightAutonomousFarImmediate extends OpMode {
     //name Dcmotors and for purpose of the program
     //ex:  Dcmotor Greg
-    //This is now standard variables that i am implementing across any class that the robot will run
-    //For this particular program no new variables need to be stated
     DcMotor Trough;
     DcMotor motorRaise;
     Servo leftscoop;
@@ -38,14 +32,11 @@ public class RotationRecorder extends OpMode {
     double rightscoopPosition;
 
 
-    public RotationRecorder(){}
+    public StraightAutonomousFarImmediate(){}
 
     @Override
             public void init(){
-        /*This is where the mapping of the now-standard variables are
-        * There are changes here, only having to do with Treadleft and Treadright, making them both
-        * reset encoders and telling the robot to run using encoders
-        * */
+        //scoop and trough
         leftscoop=hardwareMap.servo.get("scoopleft");
         rightscoop=hardwareMap.servo.get("scoopright");
         motorRaise=hardwareMap.dcMotor.get("raisescoop");
@@ -58,12 +49,6 @@ public class RotationRecorder extends OpMode {
         Treadleft=hardwareMap.dcMotor.get("LeftTread");
         Treadright=hardwareMap.dcMotor.get("RightTread");
         Treadright.setDirection(DcMotor.Direction.REVERSE);
-
-        /** This is where the changes are*/
-
-        Treadleft.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        Treadright.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-
 
         //Zombie Arm
 
@@ -79,32 +64,23 @@ public class RotationRecorder extends OpMode {
 
     }
     @Override
-    //This class allows for the easy access and reset of the motor encoder data
             public void loop(){
+        resetStartTime();
 
-        if(gamepad1.a){
-            Treadleft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-            Treadright.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+
+
+        long targetEndTime = System.currentTimeMillis() +5000;
+
+
+        if(System.currentTimeMillis()<= targetEndTime) {
+            Treadleft.setPower(1);
+            Treadright.setPower(1);
         }
+        else{
+            Treadleft.setPower(0);
+            Treadright.setPower(0);
 
-        if(gamepad1.y){
-            Treadleft.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-            Treadright.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         }
-        float left=gamepad1.left_stick_y;
-        float right=gamepad1.right_stick_y;
-
-        right= Range.clip(right, -1, 1);
-        left = Range.clip(left, -1, 1);
-
-        right = (float)scaleInput(right);
-        left =  (float)scaleInput(left);
-
-        Treadleft.setPower(left);
-        Treadright.setPower(right);
-        telemetry.addData("Left", "Left Motor: " + Treadleft.getCurrentPosition());
-        telemetry.addData("Right", "Right Motor: " + Treadright.getCurrentPosition());
-
     //set all the driver and gamepad options. this is where the program goes.
     }
     @Override

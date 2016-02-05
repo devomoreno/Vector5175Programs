@@ -2,14 +2,14 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.util.Timer;
+
 //import all hardware going to be used
-public class AutonomousEncoderUseTial1 extends OpMode {
+public class StraightAutonomousFarWait extends OpMode {
     //name Dcmotors and for purpose of the program
     //ex:  Dcmotor Greg
-    //Trough and Scoop
     DcMotor Trough;
     DcMotor motorRaise;
     Servo leftscoop;
@@ -24,6 +24,7 @@ public class AutonomousEncoderUseTial1 extends OpMode {
     DcMotor LinearActuator;
     DcMotor BaseExtend;
     DcMotor SecondExtend;
+    Timer timer;
 
 
     final static double SCOOP_MIN_RANGE  = 0.00;
@@ -32,8 +33,9 @@ public class AutonomousEncoderUseTial1 extends OpMode {
     double scoopDelta=0.005;
     double leftscoopPosition;
     double rightscoopPosition;
-    double generalPower;
-    public AutonomousEncoderUseTial1(){}
+
+
+    public StraightAutonomousFarWait(){}
 
     @Override
             public void init(){
@@ -49,12 +51,7 @@ public class AutonomousEncoderUseTial1 extends OpMode {
         //Drive
         Treadleft=hardwareMap.dcMotor.get("LeftTread");
         Treadright=hardwareMap.dcMotor.get("RightTread");
-        Treadleft.setDirection(DcMotor.Direction.REVERSE);
-        Treadright.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        Treadleft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        Treadleft.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        Treadright.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-
+        Treadright.setDirection(DcMotor.Direction.REVERSE);
 
         //Zombie Arm
 
@@ -68,26 +65,30 @@ public class AutonomousEncoderUseTial1 extends OpMode {
 
         //map items here and set rules ( reference any vector baseline or basic programs)
 
-
     }
     @Override
             public void loop(){
+        resetStartTime();
+
+        timer = new Timer();
 
 
 
-        long startTime = System.currentTimeMillis();
-        if((System.currentTimeMillis()-startTime)>10){
-            Treadleft.setTargetPosition(90);
-            Treadleft.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+
+        long firstTargetStartTime = System.currentTimeMillis() +10000;
+        long firstTargetEndTime = System.currentTimeMillis() + 15000;
+
+        if(System.currentTimeMillis()>= firstTargetStartTime && System.currentTimeMillis()< firstTargetEndTime) {
+            Treadleft.setPower(1);
+            Treadright.setPower(1);
+        }
+        else{
+            Treadleft.setPower(0);
+            Treadright.setPower(0);
+
         }
 
-
-        
-
-
-
-
-    //set all the driver and gamepasad options. this is where the program goes.
+    //set all the driver and gamepad options. this is where the program goes.
     }
     @Override
         public void stop(){

@@ -110,7 +110,22 @@ public class FtcOpModeRegister implements OpModeRegister {
             //Autonomous Op Modes
       //manager.register("AutonomousTrial1",AutonomousTrial1.class);
       //manager.register("AutonomousTrial2", AutonomousTrial2.class);
-      manager.register("Autonomous Straight", AutonomousStraightTrial1.class);
+     // manager.register("Autonomous Straight", AutonomousPureStraightEncoder.class);
+      //manager.register("Close Wait",StraightAutonomousCloseWait.class);
+      //manager.register("Far Wait",StraightAutonomousFarWait.class);
+      //manager.register("Close Immediate",StraightAutonomousCloseImmediate.class);
+      //manager.register("Far Immediate", StraightAutonomousFarImmediate.class);
+      manager.register("Red Close Floor-Goal Wait", AutonomousRedCloseStraightFloorGoalWait.class);
+      manager.register("Red Close Floor-Goal Now", AutonomousRedCloseStraightFloorGoalNow.class);
+      manager.register("Red Far Floor-Goal Wait", AutonomousRedFarStraightFloorGoalWait.class);
+      manager.register("Red Far Floor-Goal Now", AutonomousRedFarStraightFloorGoalNow.class);
+      manager.register("Blue Close Floor-Goal Wait",AutonomousBlueCloseStraightFloorGoalWait.class);
+      manager.register("Blue Close Floor-Goal Now", AutonomousBlueCloseStraightFloorGoalNow.class);
+      manager.register("Blue Far Floor-Goal Wait", AutonomousBlueFarStraightFloorGoalWait.class);
+      manager.register("Blue Far Floor-Goal Now", AutonomousBlueFarStraightFloorGoalNow.class);
+      manager.register("CHOOOOO CHOOOOOOO", AutonomousPureStraightEncoder.class);
+
+
 
 
                 //Testing OP modes
@@ -119,6 +134,8 @@ public class FtcOpModeRegister implements OpModeRegister {
       //manager.register("LegacyMotorTester",LegacyMotorTester.class);
       //manager.register("ZombieTestMod",ZombieTestMod.class);
       manager.register("Encoder Rotation Recorder", RotationRecorder.class);
+
+
 
   }
 }
