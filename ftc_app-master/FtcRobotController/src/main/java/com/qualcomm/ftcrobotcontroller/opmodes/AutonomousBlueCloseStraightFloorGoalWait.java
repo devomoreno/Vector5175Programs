@@ -1,3 +1,7 @@
+/*The purpouse of this autonomous mode is to go straight, as to clear as many blocks
+ out of the way of the mountain turn and then align itself into the floor goal
+ waiting 10 seconds before starting from the close blue postition*/
+
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;

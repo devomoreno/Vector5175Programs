@@ -1,3 +1,5 @@
+/*The purpose of this autonomous mode is to go straight*/
+
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
